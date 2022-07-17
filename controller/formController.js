@@ -8,7 +8,7 @@ const randomNumberof10 = () => {
 };
 
 form.saveFormData = async (req, res, next) => {
-  // console.log(req);
+  //   console.log(req);
   try {
     // console.log(req.body);
 
@@ -43,15 +43,16 @@ form.saveFormData = async (req, res, next) => {
         : false;
 
     const TicketFare =
-      typeof req.body.Price === 'number' ? req.body.Price : false;
+      typeof req.body.TicketFare === 'number' ? req.body.TicketFare : false;
 
     const Note =
       typeof req.body.Note === 'string' && req.body.Note.length > 0
         ? req.body.Note
         : false;
 
-    if (Name && From && To && Date && Time && Price && Note) {
+    if (Name && From && To && Date && Time && TicketFare && Note) {
       const reservation = await formData.findOne({ Name });
+      //   console.log(reservation);
       if (reservation) {
         res.status(400).json({
           status: 'Error!!',
@@ -68,9 +69,12 @@ form.saveFormData = async (req, res, next) => {
           TicketFare,
           Note,
         };
+        // console.log('reservationobj', reservationObject);
 
         // save a to database
         const newReservation = await formData.create(reservationObject);
+
+        console.log('new:', newReservation);
 
         //check and response success if application is inserted to database
         if (newReservation) {
