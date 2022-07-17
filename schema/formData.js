@@ -32,7 +32,7 @@ const formSchema = mongoose.Schema({
     required: true,
     select: true,
   },
-  FareAmount: {
+  TicketFare: {
     type: String,
     required: true,
     select: true,

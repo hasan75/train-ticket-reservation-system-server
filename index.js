@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
@@ -23,6 +23,18 @@ app.use(express.json());
 database.connect();
 
 app.use('/formSubmit', formSubmit);
+
+app.use((err, req, res, next) => {
+  err.statusCode = err.statusCode || 500;
+  err.status = err.status || 'Server Error!';
+
+  // console.log(res, 'res');
+
+  res.status(err.statusCode).json({
+    status: err,
+    message: err.message,
+  });
+});
 
 //for checking server
 app.get('/', (req, res) => {

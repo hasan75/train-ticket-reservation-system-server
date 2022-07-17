@@ -1,4 +1,4 @@
-const formData = require('../model/formData');
+const formData = require('../schema/formData');
 
 // init model
 const form = {};
@@ -73,7 +73,6 @@ form.saveFormData = async (req, res, next) => {
 
         // save a to database
         const newReservation = await formData.create(reservationObject);
-
         console.log('new:', newReservation);
 
         //check and response success if application is inserted to database
@@ -86,7 +85,7 @@ form.saveFormData = async (req, res, next) => {
           // if reservation is not inserted
           res.status(500).json({
             status: 'server error',
-            message: 'Server error! Try again later.',
+            message: 'Server error! Try again later(NEW RESERVATION NAI).',
           });
         }
       }
@@ -94,15 +93,15 @@ form.saveFormData = async (req, res, next) => {
       const err = {
         statusCode: 400,
         status: 'Bad Request!',
-        message: 'Please check your input data',
+        message: 'Please check your input data again.',
       };
       next(err);
     }
   } catch (err) {
-    // console.log(err);
+    console.log(err);
     res.status(500).json({
       status: 'server error!',
-      message: 'Server error! Try again later.',
+      message: 'Server error! Try again later(catch)',
     });
   }
 };

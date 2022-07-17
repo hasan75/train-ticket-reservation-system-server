@@ -4,7 +4,7 @@ require('dotenv').config();
 //init database
 const database = {};
 
-database.uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.4dxux.mongodb.net/?retryWrites=true&w=majority`;
+database.uri = `mongodb+srv://TrainTicketReservation:${process.env.DB_PASS}@cluster0.m6psz.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 
 database.connect = () => {
   mongoose
