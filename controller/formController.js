@@ -1,4 +1,4 @@
-const formData = require('../schema/formData');
+const reservation = require('../schema/reservation');
 
 // init model
 const form = {};
@@ -51,15 +51,16 @@ form.saveFormData = async (req, res, next) => {
         : false;
 
     if (Name && From && To && Date && Time && TicketFare && Note) {
-      const reservation = await formData.findOne({ Name });
-      //   console.log(reservation);
-      if (reservation) {
+      const aReservation = await reservation.findOne({ Name });
+      //   console.log(aReservation);
+      if (aReservation) {
         res.status(400).json({
           status: 'Error!!',
           message: 'This name already exists.',
         });
       } else {
-        const reservationObject = {
+        // save a to database
+        const newReservation = await reservation.create({
           Name,
           Gender,
           From,
@@ -68,18 +69,14 @@ form.saveFormData = async (req, res, next) => {
           Time,
           TicketFare,
           Note,
-        };
-        // console.log('reservationobj', reservationObject);
-
-        // save a to database
-        const newReservation = await formData.create(reservationObject);
+        });
         console.log('new:', newReservation);
 
         //check and response success if application is inserted to database
         if (newReservation) {
           res.status(201).json({
             status: 'success',
-            message: `Your reservation ID is: ${randomNumberof10()}`,
+            message: `Your reservation ID is: ${randomNumberof10()}!`,
           });
         } else {
           // if reservation is not inserted

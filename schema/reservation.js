@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 //schema
-const formSchema = mongoose.Schema({
+const reservationFormSchema = mongoose.Schema({
   Name: {
     type: String,
     required: true,
@@ -44,6 +44,6 @@ const formSchema = mongoose.Schema({
   },
 });
 
-const formData = mongoose.model('formData', formSchema);
+const reservation = mongoose.model('reservation', reservationFormSchema);
 
-module.exports = formData;
+module.exports = reservation;
