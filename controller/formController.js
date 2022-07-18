@@ -10,7 +10,7 @@ const randomNumberof10 = () => {
 form.saveFormData = async (req, res, next) => {
   //   console.log(req);
   try {
-    // console.log(req.body);
+    console.log(req.body);
 
     const Name =
       typeof req.body.Name === 'string' && req.body.Name.length > 0
@@ -59,6 +59,16 @@ form.saveFormData = async (req, res, next) => {
           message: 'This name already exists.',
         });
       } else {
+        // console.log({
+        //   Name,
+        //   Gender,
+        //   From,
+        //   To,
+        //   Date,
+        //   Time,
+        //   TicketFare,
+        //   Note,
+        // });
         // save a to database
         const newReservation = await reservation.create({
           Name,
@@ -72,7 +82,7 @@ form.saveFormData = async (req, res, next) => {
         });
         console.log('new:', newReservation);
 
-        //check and response success if application is inserted to database
+        //if reservationForm data inserted to the database
         if (newReservation) {
           res.status(201).json({
             status: 'success',
@@ -82,7 +92,7 @@ form.saveFormData = async (req, res, next) => {
           // if reservation is not inserted
           res.status(500).json({
             status: 'server error',
-            message: 'Server error! Try again later(NEW RESERVATION NAI).',
+            message: 'Server error! Try again later(No NEWRESERVATION).',
           });
         }
       }
