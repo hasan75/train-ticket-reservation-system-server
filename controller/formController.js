@@ -10,7 +10,7 @@ const randomNumberof10 = () => {
 form.saveFormData = async (req, res, next) => {
   //   console.log(req);
   try {
-    console.log(req.body);
+    // console.log(req.body, 'body');
 
     const Name =
       typeof req.body.Name === 'string' && req.body.Name.length > 0
@@ -43,12 +43,17 @@ form.saveFormData = async (req, res, next) => {
         : false;
 
     const TicketFare =
-      typeof req.body.TicketFare === 'number' ? req.body.TicketFare : false;
+      typeof req.body.TicketFare === 'number' ||
+      typeof req.body.TicketFare === 'string'
+        ? req.body.TicketFare
+        : false;
 
     const Note =
       typeof req.body.Note === 'string' && req.body.Note.length > 0
         ? req.body.Note
         : false;
+
+    // console.log(Name, Gender, From, To, Date, Time, TicketFare, Note);
 
     if (Name && From && To && Date && Time && TicketFare && Note) {
       const aReservation = await reservation.findOne({ Name });
@@ -69,8 +74,13 @@ form.saveFormData = async (req, res, next) => {
         //   TicketFare,
         //   Note,
         // });
-        // save a to database
-        const newReservation = await reservation.create({
+
+        // console.log(TicketFare, 'TicketFare');
+
+        // const fareJPY = Math.floor(TicketFare * 1.47);
+        // console.log(fareJPY, 'TicketInJPY');
+
+        const anotherReservation = {
           Name,
           Gender,
           From,
@@ -79,7 +89,23 @@ form.saveFormData = async (req, res, next) => {
           Time,
           TicketFare,
           Note,
-        });
+        };
+
+        // anotherReservation.TicketFare = fareJPY;
+
+        // const newReservation = await reservation.create({
+        //   Name,
+        //   Gender,
+        //   From,
+        //   To,
+        //   Date,
+        //   Time,
+        //   TicketFare,
+        //   Note,
+        // });
+
+        const newReservation = await reservation.create(anotherReservation);
+
         console.log('new:', newReservation);
 
         //if reservationForm data inserted to the database
